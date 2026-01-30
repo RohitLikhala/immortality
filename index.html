@@ -36,6 +36,103 @@
             color: var(--black);
             overflow-x: hidden;
             line-height: 1.6;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease;
+        }
+
+        .custom-cursor.hover {
+            transform: scale(2);
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary-light);
+        }
+
+        .cursor-dot.hover {
+            transform: scale(0);
+        }
+
+        /* Dynamic Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+            overflow: hidden;
+        }
+
+        .gradient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: blob-float 20s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            top: -10%;
+            right: -5%;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #2563EB, #3B82F6);
+            bottom: -15%;
+            left: -10%;
+            animation-delay: 7s;
+        }
+
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #60A5FA, #93C5FD);
+            top: 50%;
+            left: 50%;
+            animation-delay: 14s;
+        }
+
+        @keyframes blob-float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -100px) scale(1.1) rotate(90deg);
+            }
+            50% {
+                transform: translate(-50px, 100px) scale(0.9) rotate(180deg);
+            }
+            75% {
+                transform: translate(150px, 50px) scale(1.05) rotate(270deg);
+            }
         }
 
         /* Header */
@@ -119,33 +216,68 @@
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             border: none;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.4), rgba(96, 165, 250, 0.2));
+            filter: blur(20px);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-outline {
             background: transparent;
             color: var(--black);
             border: 2px solid var(--black);
+            z-index: 1;
+        }
+
+        .btn-outline::before {
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.15), rgba(96, 165, 250, 0.05));
+            filter: blur(25px);
         }
 
         .btn-outline:hover {
             background: var(--black);
             color: var(--white);
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .btn-blue {
             background: var(--gradient-blue);
             color: white;
             box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+            z-index: 1;
+        }
+
+        .btn-blue::before {
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.6), rgba(147, 197, 253, 0.3));
+            filter: blur(30px);
         }
 
         .btn-blue:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
         }
 
         /* Hero Section with Parallax */
@@ -703,6 +835,14 @@
             background: white;
             color: var(--primary-blue);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-white::before {
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2), rgba(96, 165, 250, 0.1));
+            filter: blur(25px);
         }
 
         .btn-white:hover {
@@ -823,6 +963,17 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Dynamic Gradient Background -->
+    <div class="gradient-bg">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
+    </div>
+
     <!-- Header -->
     <header id="header">
         <div class="header-content">
@@ -1280,6 +1431,44 @@
                     });
                 }
             });
+        });
+
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('a, button, .btn, .slider-dot, .feature-card, .gallery-item, .multi-slide-item');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+                cursorDot.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+                cursorDot.classList.remove('hover');
+            });
+        });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
+            cursorDot.style.opacity = '1';
         });
     </script>
 </body>
