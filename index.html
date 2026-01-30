@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immortality - Forever Connected</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563EB;
+            --primary-light: #60A5FA;
+            --primary-dark: #1E40AF;
+            --white: #FFFFFF;
+            --black: #0A0A0A;
+            --gray-light: #F8FAFC;
+            --gray-medium: #64748B;
+            --gray-dark: #1E293B;
+            --gradient-blue: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 5%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-blue {
+            background: var(--gradient-blue);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-blue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+        }
+
+        .hero-parallax {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            object-fit: cover;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #EFF6FF 30%, rgba(239, 246, 255, 0.7) 70%, transparent 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            animation: slideInLeft 0.8s ease-out 0.2s both;
+        }
+
+        .hero-highlight {
+            color: var(--primary-blue);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--gray-medium);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            animation: slideInLeft 0.8s ease-out 0.4s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            animation: slideInLeft 0.8s ease-out 0.6s both;
+        }
+
+        .btn-large {
+            padding: 1.1rem 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Photo Slider Section */
+        .photo-slider-section {
+            padding: 6rem 5%;
+            background: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 500px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        .slide-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #E5E7EB;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: var(--primary-blue);
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* Multi-Image Slider */
+        .multi-slider {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 4rem auto 0;
+            max-width: 1400px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .multi-slide-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .multi-slide-item:hover {
+            transform: scale(1.05);
+        }
+
+        .multi-slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Parallax Section */
+        .parallax-section {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .parallax-bg {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 200px);
+            object-fit: cover;
+            will-change: transform;
+        }
+
+        .parallax-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 3rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+        }
+
+        .parallax-content h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .parallax-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Features with Images */
+        .features-section {
+            padding: 6rem 5%;
+            background: var(--gray-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .feature-content {
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-blue);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+
+        .feature-content p {
+            color: var(--gray-medium);
+            line-height: 1.7;
+        }
+
+        /* Stats Section with Background Image */
+        .stats-section {
+            position: relative;
+            padding: 6rem 5%;
+            background: var(--black);
+            color: white;
+            overflow: hidden;
+        }
+
+        .stats-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .stats-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(37, 99, 235, 0.8) 100%);
+        }
+
+        .stats-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.15rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        /* Testimonial Slider */
+        .testimonial-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .testimonial-slider {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+
+        .testimonial-slide {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .testimonial-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            object-fit: cover;
+            border: 4px solid var(--primary-light);
+        }
+
+        .testimonial-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--gray-dark);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--black);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-role {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 6rem 5%;
+            background: var(--gray-light);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(37, 99, 235, 0.8), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            color: white;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 5%;
+            background: var(--primary-blue);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary-blue);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 600px;
+                padding: 8rem 5% 4rem;
+            }
+
+            .hero-image {
+                width: 100%;
+                height: 50%;
+                top: auto;
+                bottom: 0;
+            }
+
+            .hero-overlay {
+                background: linear-gradient(to top, #EFF6FF 30%, rgba(239, 246, 255, 0.8) 70%, transparent 100%);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .multi-slider {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <span>∞</span> Immortality
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#stories">Stories</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-buttons">
+                <a href="#signin" class="btn btn-outline">Sign In</a>
+                <a href="#signup" class="btn btn-blue">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Parallax -->
+    <section class="hero">
+        <div class="hero-parallax">
+            <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200&h=800&fit=crop" alt="Happy family" class="hero-image" id="heroImage">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>✨</span> Connecting Hearts & Generations
+            </div>
+            <h1>Keep Your Family <span class="hero-highlight">Forever Connected</span></h1>
+            <p class="hero-description">Create lasting memories, share precious moments, and strengthen bonds across generations. Your family's story lives here.</p>
+            <div class="hero-cta">
+                <a href="#signup" class="btn btn-blue btn-large">Start Free Today</a>
+                <a href="#learn" class="btn btn-outline btn-large">Watch Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Photo Slider -->
+    <section class="photo-slider-section scroll-reveal">
+        <div class="section-header">
+            <div class="section-subtitle">Moments That Matter</div>
+            <h2 class="section-title">Capture Every Precious Memory</h2>
+            <p class="section-description">From daily smiles to milestone celebrations, preserve the moments that make your family unique</p>
+        </div>
+
+        <div class="slider-container">
+            <div class="slider-wrapper" id="mainSlider">
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200&h=600&fit=crop" alt="Family gathering">
+                    <div class="slide-content">
+                        <h3>Family Gatherings</h3>
+                        <p>Celebrate together, no matter where you are</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1576089172869-4f5f6f315620?w=1200&h=600&fit=crop" alt="Grandparents with grandchildren">
+                    <div class="slide-content">
+                        <h3>Generational Bonds</h3>
+                        <p>Bridge the gap between young and old</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200&h=600&fit=crop" alt="Happy family outdoors">
+                    <div class="slide-content">
+                        <h3>Outdoor Adventures</h3>
+                        <p>Share your family's adventures and explorations</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1577036421869-7c8d388d2123?w=1200&h=600&fit=crop" alt="Family cooking together">
+                    <div class="slide-content">
+                        <h3>Everyday Moments</h3>
+                        <p>The simple joys that bring families together</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <span class="slider-dot active" data-slide="0"></span>
+                <span class="slider-dot" data-slide="1"></span>
+                <span class="slider-dot" data-slide="2"></span>
+                <span class="slider-dot" data-slide="3"></span>
+            </div>
+        </div>
+
+        <!-- Multi-Image Slider -->
+        <div class="multi-slider">
+            <div class="multi-slide-item">
+                <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=400&h=500&fit=crop" alt="Family portrait">
+            </div>
+            <div class="multi-slide-item">
+                <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=400&h=500&fit=crop" alt="Children playing">
+            </div>
+            <div class="multi-slide-item">
+                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=400&h=500&fit=crop" alt="Parents with baby">
+            </div>
+            <div class="multi-slide-item">
+                <img src="https://images.unsplash.com/photo-1521151716396-b2da27b1a19f?w=400&h=500&fit=crop" alt="Family celebration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Quote Section -->
+    <section class="parallax-section" id="parallax1">
+        <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1600&h=800&fit=crop" alt="Family background" class="parallax-bg" id="parallaxBg1">
+        <div class="parallax-content">
+            <h2>"Family is not an important thing. It's everything."</h2>
+            <p>Create a digital home where your family's legacy lives forever. Share stories, preserve memories, and stay connected across generations.</p>
+        </div>
+    </section>
+
+    <!-- Features with Images -->
+    <section class="features-section scroll-reveal" id="features">
+        <div class="section-header">
+            <div class="section-subtitle">Powerful Features</div>
+            <h2 class="section-title">Everything Your Family Needs</h2>
+            <p class="section-description">Thoughtfully designed tools to bring your family closer together</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600&h=400&fit=crop" alt="Family photos" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">📸</div>
+                    <h3>Memory Vault</h3>
+                    <p>Securely store unlimited photos and videos. Organize by events, people, or dates. Never lose a precious memory again.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&h=400&fit=crop" alt="Family tree" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">🌳</div>
+                    <h3>Interactive Family Tree</h3>
+                    <p>Build your family's visual history. Add photos, stories, and details about ancestors and descendants.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600&h=400&fit=crop" alt="Video call" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">💬</div>
+                    <h3>Family Chat & Video</h3>
+                    <p>Stay in touch with group chats and video calls. Share updates instantly with everyone you love.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=400&fit=crop" alt="Calendar" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">📅</div>
+                    <h3>Shared Calendar</h3>
+                    <p>Never miss birthdays, anniversaries, or family events. Sync calendars and plan together.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1513743967424-d31d29d82ace?w=600&h=400&fit=crop" alt="Milestones" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">🎉</div>
+                    <h3>Milestone Tracking</h3>
+                    <p>Document first steps, graduations, weddings, and all of life's special moments in one place.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop" alt="Privacy" class="feature-image">
+                <div class="feature-content">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy & Security</h3>
+                    <p>Bank-level encryption keeps your family's memories safe and private. You control who sees what.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1600&h=600&fit=crop" alt="Happy families" class="stats-bg">
+        <div class="stats-overlay"></div>
+        <div class="stats-content">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Families Connected</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5M+</div>
+                    <div class="stat-label">Memories Shared</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Countries Worldwide</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Slider -->
+    <section class="testimonial-section scroll-reveal" id="stories">
+        <div class="section-header">
+            <div class="section-subtitle">Real Stories</div>
+            <h2 class="section-title">What Families Are Saying</h2>
+        </div>
+
+        <div class="testimonial-slider">
+            <div class="testimonial-slide active">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop" alt="Sarah Johnson" class="testimonial-image">
+                <p class="testimonial-text">"Immortality has brought our scattered family closer than ever. We share photos, plan reunions, and stay connected daily. It's become the heart of our family."</p>
+                <div class="testimonial-author">Sarah Johnson</div>
+                <div class="testimonial-role">Mother of 3, California</div>
+            </div>
+            <div class="testimonial-slide">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop" alt="Michael Chen" class="testimonial-image">
+                <p class="testimonial-text">"As someone living abroad, this app helps me stay connected with my parents and siblings. The video calls and photo sharing make the distance feel smaller."</p>
+                <div class="testimonial-author">Michael Chen</div>
+                <div class="testimonial-role">Software Engineer, Singapore</div>
+            </div>
+            <div class="testimonial-slide">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop" alt="Emma Rodriguez" class="testimonial-image">
+                <p class="testimonial-text">"The family tree feature helped us discover relatives we never knew existed. Now we have regular family gatherings with 50+ members!"</p>
+                <div class="testimonial-author">Emma Rodriguez</div>
+                <div class="testimonial-role">Genealogy Enthusiast, Texas</div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <span class="slider-dot active" onclick="showTestimonial(0)"></span>
+            <span class="slider-dot" onclick="showTestimonial(1)"></span>
+            <span class="slider-dot" onclick="showTestimonial(2)"></span>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section scroll-reveal">
+        <div class="section-header">
+            <div class="section-subtitle">Our Community</div>
+            <h2 class="section-title">Families Around The World</h2>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&h=600&fit=crop" alt="Gallery 1">
+                <div class="gallery-item-overlay">
+                    <h4>The Martinez Family</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1576089172869-4f5f6f315620?w=600&h=600&fit=crop" alt="Gallery 2">
+                <div class="gallery-item-overlay">
+                    <h4>Generations Together</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&h=600&fit=crop" alt="Gallery 3">
+                <div class="gallery-item-overlay">
+                    <h4>Weekend Adventures</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1521151716396-b2da27b1a19f?w=600&h=600&fit=crop" alt="Gallery 4">
+                <div class="gallery-item-overlay">
+                    <h4>Milestone Celebrations</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1577036421869-7c8d388d2123?w=600&h=600&fit=crop" alt="Gallery 5">
+                <div class="gallery-item-overlay">
+                    <h4>Cooking Together</h4>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=600&h=600&fit=crop" alt="Gallery 6">
+                <div class="gallery-item-overlay">
+                    <h4>New Beginnings</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Second Parallax Section -->
+    <section class="parallax-section" id="parallax2">
+        <img src="https://images.unsplash.com/photo-1576089172869-4f5f6f315620?w=1600&h=800&fit=crop" alt="Grandparents with grandchildren" class="parallax-bg" id="parallaxBg2">
+        <div class="parallax-content">
+            <h2>Your Family Legacy Starts Here</h2>
+            <p>Build a digital archive that will be treasured for generations. Start preserving your family's unique story today.</p>
+            <a href="#signup" class="btn btn-white btn-large" style="margin-top: 1.5rem;">Create Your Family Space</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-content">
+            <h2>Ready to Bring Your Family Closer?</h2>
+            <p>Join thousands of families creating lasting memories and strengthening bonds across generations.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#signup" class="btn btn-white btn-large">Start Free Trial</a>
+                <a href="#demo" class="btn btn-outline btn-large" style="border-color: white; color: white;">Watch Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>∞ Immortality</h3>
+                <p>Connecting families across generations. Keep your loved ones close, preserve precious memories, and build your family's legacy.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#updates">Updates</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Immortality. All rights reserved. Made with ❤️ for families worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Parallax effect
+        const heroImage = document.getElementById('heroImage');
+        const parallaxBg1 = document.getElementById('parallaxBg1');
+        const parallaxBg2 = document.getElementById('parallaxBg2');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            
+            // Hero parallax
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+            
+            // Parallax sections
+            if (parallaxBg1) {
+                const parallax1Offset = document.getElementById('parallax1').offsetTop;
+                const parallax1Speed = (scrolled - parallax1Offset) * 0.5;
+                parallaxBg1.style.transform = `translateY(${parallax1Speed}px)`;
+            }
+            
+            if (parallaxBg2) {
+                const parallax2Offset = document.getElementById('parallax2').offsetTop;
+                const parallax2Speed = (scrolled - parallax2Offset) * 0.5;
+                parallaxBg2.style.transform = `translateY(${parallax2Speed}px)`;
+            }
+        });
+
+        // Main slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#mainSlider .slide');
+        const dots = document.querySelectorAll('.slider-nav .slider-dot');
+        const sliderWrapper = document.getElementById('mainSlider');
+
+        function updateSlider() {
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+
+        // Auto-advance slider
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }, 5000);
+
+        // Testimonial slider
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial-slide');
+
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle('active', i === index);
+            });
+            currentTestimonial = index;
+        }
+
+        // Auto-advance testimonials
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }, 6000);
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
